@@ -1,4 +1,4 @@
-package kr.ac.inha.androidcatfood;
+package androidcatfood.ac.inha.androidcatfood;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

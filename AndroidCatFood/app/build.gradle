@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "kr.ac.inha.androidcatfood"
+        applicationId "com.inha.androidcatfood"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
@@ -25,4 +25,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // 페이스북 SDK
+    compile 'com.facebook.android:facebook-android-sdk:4.+'
 }

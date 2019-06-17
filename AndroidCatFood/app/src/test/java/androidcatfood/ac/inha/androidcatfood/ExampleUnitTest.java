@@ -1,4 +1,4 @@
-package kr.ac.inha.androidcatfood;
+package androidcatfood.ac.inha.androidcatfood;
 
 import org.junit.Test;
 

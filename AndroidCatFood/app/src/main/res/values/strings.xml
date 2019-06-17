@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidCatFood</string>
+    <string name="facebook_app_key">303175057235330</string>
 </resources>
