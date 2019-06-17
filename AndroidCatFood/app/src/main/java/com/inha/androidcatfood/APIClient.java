@@ -3,7 +3,10 @@ package com.inha.androidcatfood;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -17,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
     private static APIClient instance;
 
-    public static APIClient getInstance(){
-        if(instance == null){
+    public static APIClient getInstance() {
+        if (instance == null) {
             instance = new APIClient();
         }
         return instance;
@@ -27,7 +30,7 @@ public class APIClient {
     private Retrofit retrofit;
     private APIService apiService;
 
-    public APIClient(){
+    public APIClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -41,7 +44,7 @@ public class APIClient {
         apiService = retrofit.create(APIService.class);
     }
 
-    public void login(String id, String name, String email){
+    public void login(String id, String name, String email) {
         Call<ResponseBody> res = apiService.login(new LoginRequest(id, name, email));
         res.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -60,26 +63,22 @@ public class APIClient {
         });
     }
 
-    public void getCenter(){
-        Call<ResponseBody> res = apiService.getCenter();
-        res.enqueue(new Callback<ResponseBody>() {
+    public void getCenter() {
+        final Call<FoodSpotList> res = apiService.getCenter();
+        res.enqueue(new Callback<FoodSpotList>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Log.v("Test", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<FoodSpotList> call, Response<FoodSpotList> response) {
+                FoodSpotList result = response.body();
+                Log.v("Test", result.result);
             }
-
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<FoodSpotList> call, Throwable t) {
 
             }
         });
     }
 
-    public class LoginRequest{
+    public class LoginRequest {
         String id;
         String name;
         String email;
@@ -88,6 +87,27 @@ public class APIClient {
             this.id = id;
             this.name = name;
             this.email = email;
+        }
+    }
+
+    public class FoodSpotList {
+        String result;
+        List<FoodSpot> food_center_list;
+    }
+
+    public class FoodSpot {
+        String id;
+        String name;
+        String owner;
+        Double latitude;
+        Double longitude;
+
+        FoodSpot(String id, String name, String owner, Double latitude, Double longitude) {
+            this.id = id;
+            this.name = name;
+            this.owner = owner;
+            this.latitude = latitude;
+            this.longitude = longitude;
         }
     }
 }

@@ -17,6 +17,6 @@ public interface APIService{
     Call<ResponseBody> login(@Body APIClient.LoginRequest body);
 
     @GET("api/center")
-    Call<ResponseBody> getCenter();
+    Call<APIClient.FoodSpotList> getCenter();
 
 }
