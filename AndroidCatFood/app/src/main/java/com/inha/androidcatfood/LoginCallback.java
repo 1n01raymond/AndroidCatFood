@@ -45,8 +45,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                         try {
                             JSONObject obj = new JSONObject(object.toString());
                             APIClient.getInstance().login(obj.getString("id"),
-                                    obj.getString("name"),
-                                    obj.getString("email"));
+                                    obj.getString("name"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
