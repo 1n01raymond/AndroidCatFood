@@ -1,4 +1,4 @@
-package androidcatfood.ac.inha.androidcatfood;
+package com.inha.androidcatfood;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
