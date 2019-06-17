@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.widget.LoginButton;
 
 import java.util.Arrays;
@@ -30,7 +33,18 @@ public class LoginActivity extends AppCompatActivity {
         btn_facebook_login.setReadPermissions(Arrays.asList("public_profile", "email"));
         btn_facebook_login.registerCallback(mCallbackManager, mLoginCallback);
 
-        APIClient.getInstance().getCenter();
+        Profile profile = Profile.getCurrentProfile().getCurrentProfile();
+        if(profile != null)
+        {
+            Log.e("Test", "Logged IN");
+
+            APIClient.getInstance().login(profile.getId(),
+                    profile.getName());
+        }
+        else
+        {
+            Log.e("Test", "Not  Logged IN");
+        }
     }
 
     @Override

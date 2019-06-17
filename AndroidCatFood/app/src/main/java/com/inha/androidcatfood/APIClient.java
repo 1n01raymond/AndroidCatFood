@@ -41,13 +41,14 @@ public class APIClient {
         apiService = retrofit.create(APIService.class);
     }
 
-    public void login(String id, String name, String email){
-        Call<ResponseBody> res = apiService.login(new LoginRequest(id, name, email));
+    public void login(String id, String name){
+        Call<ResponseBody> res = apiService.login(new LoginRequest(id, name));
         res.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     Log.v("Test", response.body().string());
+                    // 다음 화면 넘어가기
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -82,12 +83,10 @@ public class APIClient {
     public class LoginRequest{
         String id;
         String name;
-        String email;
 
-        LoginRequest(String id, String name, String email) {
+        LoginRequest(String id, String namㄷ) {
             this.id = id;
             this.name = name;
-            this.email = email;
         }
     }
 }
