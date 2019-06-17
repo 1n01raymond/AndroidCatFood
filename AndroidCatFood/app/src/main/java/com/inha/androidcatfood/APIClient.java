@@ -1,67 +1,73 @@
 package com.inha.androidcatfood;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
-    final static String serverURL = "http://api.openweathermap.org/data/2.5/weather";
+    private static APIClient instance;
 
-    public JSONObject reqAPI(){
-        String urlString = serverURL + "";
-
-        try {
-            // call API by using HTTPURLConnection
-            URL url = new URL(urlString);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            JSONObject json = new JSONObject(getStringFromInputStream(in));
-
-            return json;
-
-        }catch(MalformedURLException e){
-            System.err.println("Malformed URL");
-            return null;
-        }catch(JSONException e) {
-            System.err.println("JSON parsing error");
-            return null;
-        }catch(IOException e){
-            System.err.println("URL Connection failed");
-            return null;
+    public static APIClient getInstance(){
+        if(instance == null){
+            instance = new APIClient();
         }
+        return instance;
     }
 
-    private static String getStringFromInputStream(InputStream is) {
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-        String line;
+    private Retrofit retrofit;
+    private APIService apiService;
 
-        try {
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
+    public APIClient(){
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+// add your other interceptors …
+// add logging as last interceptor
+        httpClient.addInterceptor(logging);
+
+        retrofit = new Retrofit.Builder().baseUrl("http://cat.dry8r3ad.com:5005")
+                .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+        apiService = retrofit.create(APIService.class);
+    }
+
+    public void Login(String id, String name, String email){
+        Call<ResponseBody> res = apiService.login(new LoginRequest(id, name, email));
+        res.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    br.close();
+                    Log.v("Test", response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }
 
-        return sb.toString();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public class LoginRequest{
+        String id;
+        String name;
+        String email;
+
+        LoginRequest(String id, String name, String email) {
+            this.id = id;
+            this.name = name;
+            this.email = email;
+        }
     }
 }

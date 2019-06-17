@@ -10,6 +10,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
@@ -43,17 +44,13 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.e("result",object.toString());
 
-                        APITask task = new APITask();
-                        try{
-                            JSONObject obj = task.execute("").get();
-                            
-                        }catch (InterruptedException e) {
-
+                        try {
+                            JSONObject obj = new JSONObject(object.toString());
+                            APIClient.getInstance().Login(obj.getString("id"),
+                                    obj.getString("name"),
+                                    obj.getString("email"));
+                        } catch (JSONException e) {
                             e.printStackTrace();
-
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-
                         }
                     }
                 });

@@ -8,9 +8,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.LoginButton;
 
-import com.inha.androidcatfood.LoginCallback;
-import com.inha.androidcatfood.R;
-
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
