@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_facebook_login = (LoginButton) findViewById(R.id.btn_facebook_login);
         btn_facebook_login.setReadPermissions(Arrays.asList("public_profile", "email"));
         btn_facebook_login.registerCallback(mCallbackManager, mLoginCallback);
+
+        APIClient.getInstance().getCenter();
     }
 
     @Override

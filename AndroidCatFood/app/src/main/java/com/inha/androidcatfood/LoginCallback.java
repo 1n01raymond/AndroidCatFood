@@ -13,8 +13,6 @@ import com.facebook.login.LoginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.ExecutionException;
-
 public class LoginCallback implements FacebookCallback<LoginResult> {
 
     // 로그인 성공 시 호출 됩니다. Access Token 발급 성공.
@@ -46,7 +44,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
 
                         try {
                             JSONObject obj = new JSONObject(object.toString());
-                            APIClient.getInstance().Login(obj.getString("id"),
+                            APIClient.getInstance().login(obj.getString("id"),
                                     obj.getString("name"),
                                     obj.getString("email"));
                         } catch (JSONException e) {

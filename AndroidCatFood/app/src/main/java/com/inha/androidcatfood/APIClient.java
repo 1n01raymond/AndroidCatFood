@@ -3,6 +3,7 @@ package com.inha.androidcatfood;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -40,8 +41,27 @@ public class APIClient {
         apiService = retrofit.create(APIService.class);
     }
 
-    public void Login(String id, String name, String email){
+    public void login(String id, String name, String email){
         Call<ResponseBody> res = apiService.login(new LoginRequest(id, name, email));
+        res.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.v("Test", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getCenter(){
+        Call<ResponseBody> res = apiService.getCenter();
         res.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
