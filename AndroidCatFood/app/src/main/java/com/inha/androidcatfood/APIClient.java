@@ -68,14 +68,17 @@ public class APIClient {
         });
     }
 
-    public void getCenter() {
+    public void getCenter(final APICallback callback) {
         final Call<FoodSpotList> res = apiService.getCenter();
         res.enqueue(new Callback<FoodSpotList>() {
             @Override
             public void onResponse(Call<FoodSpotList> call, Response<FoodSpotList> response) {
                 FoodSpotList result = response.body();
                 Log.v("Test", result.result);
+                if(callback != null)
+                    callback.run(result);
             }
+
             @Override
             public void onFailure(Call<FoodSpotList> call, Throwable t) {
 

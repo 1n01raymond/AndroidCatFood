@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.view.Window;
 
+import android.widget.Toast;
 import com.facebook.Profile;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,8 +20,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+    GoogleMap gMap;
+
+    APICallback getCenterCallback = new APICallback() {
+        @Override
+        public void run(Object arg) {
+            APIClient.FoodSpotList foodSpotList = (APIClient.FoodSpotList) arg;
+            //GetFoodSpotAndAddMarker(foodSpotList);
+
+            List<APIClient.FoodSpot> _foodSpotList = foodSpotList.food_center_list;
+
+            if (_foodSpotList == null) {
+                Toast.makeText(getApplicationContext(), "문제가 발생했습니다.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            for (APIClient.FoodSpot foodSpot : _foodSpotList) {
+                addMarker(gMap, foodSpot.latitude, foodSpot.longitude, foodSpot.name, foodSpot.owner, foodSpot.id);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +54,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Intent intent=new Intent(this.getIntent());
+        Intent intent = new Intent(this.getIntent());
         Profile fbProfile = intent.getParcelableExtra("fbProfile");
+
+        APIClient.getInstance().getCenter(getCenterCallback);
     }
 
     @Override
     public void onMapReady(final GoogleMap map) {
+        gMap = map;
         UiSettings mapStting = map.getUiSettings();
 
-
         mapStting.setZoomControlsEnabled(true);
-        map.setOnMarkerClickListener(this);
-
-        // API 에서 데이터 get 해와서 MAP 에 데이터 add 아래 코드는 임시 코드
-        APIClient.getInstance().getCenter();
-        GetFoodSpotAndAddMarker();
-//        addMarker(map, 37.617502, 127.032104, "강북구", "송중동1", "1234");
-//        addMarker(map, 37.617544, 127.031713, "강북구", "송중동2", "1235");
-//        addMarker(map, 37.617923, 127.031181, "강북구", "송중동3", "1236");
+        map.setOnInfoWindowClickListener(this);
 
         LatLng SEOUL = new LatLng(37.56, 126.97);
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.617544, 127.031713)));
-        map.animateCamera(CameraUpdateFactory.zoomTo(15));
+        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
+        map.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
     public void addMarker(GoogleMap map, double latitude, double longitude, String title, String snippet, String tag) {
@@ -64,20 +83,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         marker.setTag(tag);
     }
 
-    public void GetFoodSpotAndAddMarker() {
-
-    }
-
     @Override
-    public boolean onMarkerClick(Marker marker) {
-
-        if (marker.isInfoWindowShown() == true) {
-            Intent intent = new Intent(this, FoodSpotInfoActivity.class);
-            intent.putExtra("_id", marker.getTag().toString());
-            startActivity(intent); //액티비티 활성화
-        } else {
-            marker.showInfoWindow();
-        }
-        return false;
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(this, FoodSpotInfoActivity.class);
+        intent.putExtra("_id", marker.getTag().toString());
+        startActivity(intent);
+        return;
     }
 }
