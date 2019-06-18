@@ -1,29 +1,21 @@
 package com.inha.androidcatfood;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-
-import android.util.JsonReader;
-import android.view.Window;
 
 import android.widget.Toast;
 import com.facebook.Profile;
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 
-import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     GoogleMap gMap;
@@ -77,7 +69,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(latitude, longitude));
         markerOptions.title(title);
-        markerOptions.snippet(snippet);
+        markerOptions.snippet("관리자 : " + snippet);
+
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.gmap_marker_icon,null);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
         Marker marker = map.addMarker(markerOptions);
         marker.setTag(tag);
