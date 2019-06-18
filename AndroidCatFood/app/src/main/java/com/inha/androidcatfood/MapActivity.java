@@ -33,7 +33,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 return;
             }
             for (APIClient.FoodSpot foodSpot : _foodSpotList) {
-                addMarker(gMap, foodSpot.latitude, foodSpot.longitude, foodSpot.name, foodSpot.owner, foodSpot.id);
+                addMarker(gMap, foodSpot.latitude, foodSpot.longitude, foodSpot.name, foodSpot.owner_name, foodSpot.id);
             }
         }
     };

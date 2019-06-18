@@ -104,6 +104,25 @@ public class APIClient {
         });
     }
 
+    public void getCenterInfo(int centerID, final APICallback callback) {
+        final Call<CenterInfo> res = apiService.getCenterInfo(centerID);
+        res.enqueue(new Callback<CenterInfo>() {
+            @Override
+            public void onResponse(Call<CenterInfo> call, Response<CenterInfo> response) {
+                CenterInfo result = response.body();
+                Log.v("Test", result.result);
+
+                if(callback != null)
+                    callback.run(result);
+            }
+            @Override
+            public void onFailure(Call<CenterInfo> call, Throwable t) {
+                Log.v("Test", t.getLocalizedMessage());
+
+            }
+        });
+    }
+
     public class LoginRequest {
         String id;
         String name;
@@ -122,16 +141,18 @@ public class APIClient {
     public class FoodSpot {
         String id;
         String name;
-        String owner;
+        String owner_name;
         Double latitude;
         Double longitude;
+        String image_path;
 
-        FoodSpot(String id, String name, String owner, Double latitude, Double longitude) {
+        FoodSpot(String id, String name, String owner_name, Double latitude, Double longitude, String image_path) {
             this.id = id;
             this.name = name;
-            this.owner = owner;
+            this.owner_name = owner_name;
             this.latitude = latitude;
             this.longitude = longitude;
+            this.image_path = image_path;
         }
     }
 
@@ -158,6 +179,30 @@ public class APIClient {
             this.content = content;
             this.created = created;
             this.user_id = user_id;
+        }
+    }
+
+    public class CatInfo{
+        String id;
+        String nickname;
+        String belong_center;
+        String user_id;
+        boolean is_natural;
+        int gender;
+        String image_path;
+    }
+
+    public class CenterInfo{
+        String result;
+        int cat_list_cnt;
+        List<CatInfo> cat_list;
+        FoodSpot center_info;
+
+        CenterInfo(String result, int cat_list_cnt, List<CatInfo> cat_list, FoodSpot center_info){
+            this.result = result;
+            this.cat_list_cnt = cat_list_cnt;
+            this.cat_list = cat_list;
+            this.center_info = center_info;
         }
     }
 }

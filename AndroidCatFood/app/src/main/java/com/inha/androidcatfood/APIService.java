@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService{
 
@@ -20,7 +21,11 @@ public interface APIService{
     @GET("api/center")
     Call<APIClient.FoodSpotList> getCenter();
 
-    @GET("api/board?id={centerID}")
-    Call<APIClient.Board> getBoard(@Path("centerID")int centerID);
+    @GET("api/board")
+    Call<APIClient.Board> getBoard(@Query("id") int centerID);
+
+
+    @GET("api/center_info")
+    Call<APIClient.CenterInfo> getCenterInfo(@Query("id") int centerID);
 
 }

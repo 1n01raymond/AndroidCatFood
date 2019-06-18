@@ -8,56 +8,49 @@
         android:layout_height="match_parent"
         tools:context=".FoodSpotInfoActivity">
 
-    <ImageView
-            android:layout_width="300dp"
-            android:layout_height="150dp"
-            tools:srcCompat="@tools:sample/avatars[3]"
-            android:id="@+id/imageView"
-            android:layout_weight="2"
-            android:layout_gravity="center|center_horizontal|center_vertical"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:layout_weight="1"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_weight="1"/>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_weight="3"
-            android:padding="10dp">
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
-        </LinearLayout>
-    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15" />
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:layout_weight="9">
-        <Button
-                android:text="Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button2"
-                android:layout_weight="1"/>
-        <Button
-                android:text="Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button4"
-                android:layout_weight="1"/>
-    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/centerImage"
+        android:layout_width="325dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+        app:civ_border_color="#FF000000" />
+
+    <TextView
+        android:id="@+id/center_title"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:text="고양이 급식소"
+        android:textAlignment="center"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/center_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:text="관리자 : 호롤료"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="4"
+        android:gravity="center_horizontal" />
 
 </LinearLayout>
