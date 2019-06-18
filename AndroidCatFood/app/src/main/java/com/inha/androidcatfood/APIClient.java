@@ -44,13 +44,18 @@ public class APIClient {
         apiService = retrofit.create(APIService.class);
     }
 
-    public void login(String id, String name){
+    public void login(final String id, final String name, final APICallback callback){
+        Call<ResponseBody> res = apiService.login(new LoginRequest(id, name));
         res.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     Log.v("Test", response.body().string());
+
                     // 다음 화면 넘어가기
+                    if(callback != null)
+                        callback.run(null);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -82,7 +87,7 @@ public class APIClient {
         String id;
         String name;
 
-        LoginRequest(String id, String namㄷ) {
+        LoginRequest(String id, String name) {
             this.id = id;
             this.name = name;
         }

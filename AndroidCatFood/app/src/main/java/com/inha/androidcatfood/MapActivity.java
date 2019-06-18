@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import android.util.JsonReader;
 import android.view.Window;
+
+import com.facebook.Profile;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -27,6 +29,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Intent intent=new Intent(this.getIntent());
+        Profile fbProfile = intent.getParcelableExtra("fbProfile");
     }
 
     @Override

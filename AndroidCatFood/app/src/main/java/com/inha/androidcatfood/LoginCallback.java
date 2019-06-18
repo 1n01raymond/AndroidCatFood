@@ -1,5 +1,7 @@
 package com.inha.androidcatfood;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,6 +16,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginCallback implements FacebookCallback<LoginResult> {
+
+    LoginActivity activity;
+
+    public LoginCallback(LoginActivity activity){
+        this.activity = activity;
+    }
 
     // 로그인 성공 시 호출 됩니다. Access Token 발급 성공.
     @Override
@@ -45,7 +53,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                         try {
                             JSONObject obj = new JSONObject(object.toString());
                             APIClient.getInstance().login(obj.getString("id"),
-                                    obj.getString("name"));
+                                    obj.getString("name"), activity.onLoginSuccessCallback);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
