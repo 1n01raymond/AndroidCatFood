@@ -83,6 +83,24 @@ public class APIClient {
         });
     }
 
+    public void getBoard(int centerID, final APICallback callback) {
+        final Call<Board> res = apiService.getBoard(centerID);
+        res.enqueue(new Callback<Board>() {
+            @Override
+            public void onResponse(Call<Board> call, Response<Board> response) {
+                Board result = response.body();
+                Log.v("Test", result.result);
+
+                if(callback != null)
+                    callback.run(result);
+            }
+            @Override
+            public void onFailure(Call<Board> call, Throwable t) {
+
+            }
+        });
+    }
+
     public class LoginRequest {
         String id;
         String name;
@@ -111,6 +129,32 @@ public class APIClient {
             this.owner = owner;
             this.latitude = latitude;
             this.longitude = longitude;
+        }
+    }
+
+    public class Board{
+        String result;
+        List<BoardContent> content_list;
+    }
+
+    public class BoardContent{
+        String id;
+        String belong_center_id;
+        String subject;
+        boolean is_notice;
+        String content;
+        String created;
+        String user_id;
+
+        BoardContent(String id, String belong_center_id, String subject, boolean is_notice,
+                     String content, String created, String user_id){
+            this.id = id;
+            this.belong_center_id = belong_center_id;
+            this.subject = subject;
+            this.is_notice = is_notice;
+            this.content = content;
+            this.created = created;
+            this.user_id = user_id;
         }
     }
 }
