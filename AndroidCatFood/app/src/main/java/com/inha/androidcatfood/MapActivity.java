@@ -71,7 +71,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.title(title);
         markerOptions.snippet("관리자 : " + snippet);
 
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.gmap_marker_icon,null);
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_gmap_marker,null);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
