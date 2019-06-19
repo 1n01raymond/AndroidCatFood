@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:padding="10dp">
+
+    <android.support.v7.widget.CardView
+            android:id="@+id/cardViewBoard"
+            card_view:cardCornerRadius="3dp"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/tvBoardCreatInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp"
+                        android:paddingLeft="10dp"/>
+                <TextView
+                        android:id="@+id/tvBoardSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Subject"
+                        android:textAlignment="textStart"
+                        android:textSize="28sp"
+                        android:paddingLeft="10dp"/>
+
+                <TextView
+                        android:id="@+id/tvBoardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ddd"
+                        android:textAlignment="textStart"
+                        android:textSize="18sp"
+                        android:paddingLeft="20dp"/>
+
+                <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

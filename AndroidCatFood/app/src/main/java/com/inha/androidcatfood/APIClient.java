@@ -3,6 +3,7 @@ package com.inha.androidcatfood;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +30,7 @@ public class APIClient {
 
     private Retrofit retrofit;
     private APIService apiService;
+    private String _user_id;
 
     public APIClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -44,7 +46,7 @@ public class APIClient {
         apiService = retrofit.create(APIService.class);
     }
 
-    public void login(final String id, final String name, final APICallback callback){
+    public void login(final String id, final String name, final APICallback callback) {
         Call<ResponseBody> res = apiService.login(new LoginRequest(id, name));
         res.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -53,9 +55,10 @@ public class APIClient {
                     Log.v("Test", response.body().string());
 
                     // 다음 화면 넘어가기
-                    if(callback != null)
+                    if (callback != null)
                         callback.run(null);
 
+                    _user_id = id;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -75,30 +78,12 @@ public class APIClient {
             public void onResponse(Call<FoodSpotList> call, Response<FoodSpotList> response) {
                 FoodSpotList result = response.body();
                 Log.v("Test", result.result);
-                if(callback != null)
+                if (callback != null)
                     callback.run(result);
             }
 
             @Override
             public void onFailure(Call<FoodSpotList> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void getBoard(int centerID, final APICallback callback) {
-        final Call<Board> res = apiService.getBoard(centerID);
-        res.enqueue(new Callback<Board>() {
-            @Override
-            public void onResponse(Call<Board> call, Response<Board> response) {
-                Board result = response.body();
-                Log.v("Test", result.result);
-
-                if(callback != null)
-                    callback.run(result);
-            }
-            @Override
-            public void onFailure(Call<Board> call, Throwable t) {
 
             }
         });
@@ -112,9 +97,10 @@ public class APIClient {
                 CenterInfo result = response.body();
                 Log.v("Test", result.result);
 
-                if(callback != null)
+                if (callback != null)
                     callback.run(result);
             }
+
             @Override
             public void onFailure(Call<CenterInfo> call, Throwable t) {
                 Log.v("Test", t.getLocalizedMessage());
@@ -123,18 +109,18 @@ public class APIClient {
         });
     }
 
-    public void writeBoard(final String user_id, final String belong_center_id,
-                           final boolean is_notice, final String subject, final String content, final APICallback callback){
-        Call<ResponseBody> res = apiService.writeBoard(new WriteBoardRequest(belong_center_id, subject, is_notice, content, user_id));
-        res.enqueue(new Callback<ResponseBody>() {
+    public void writeBoard(final String belong_center_id,
+                           final int is_notice, final String subject, final String content, final APICallback callback) {
+        Call<WriteBoardResult> res = apiService.writeBoard(new WriteBoardRequest(belong_center_id, subject, is_notice, content, _user_id));
+        res.enqueue(new Callback<WriteBoardResult>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(callback != null)
-                    callback.run(null);
+            public void onResponse(Call<WriteBoardResult> call, Response<WriteBoardResult> response) {
+                if (callback != null)
+                    callback.run(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<WriteBoardResult> call, Throwable t) {
 
             }
         });
@@ -173,22 +159,17 @@ public class APIClient {
         }
     }
 
-    public class Board{
-        String result;
-        List<BoardContent> content_list;
-    }
-
-    public class BoardContent{
+    public class BoardContent implements Serializable {
         String id;
         String belong_center_id;
         String subject;
-        boolean is_notice;
+        int is_notice;
         String content;
         String created;
         String user_id;
 
-        BoardContent(String id, String belong_center_id, String subject, boolean is_notice,
-                     String content, String created, String user_id){
+        BoardContent(String id, String belong_center_id, String subject, int is_notice,
+                     String content, String created, String user_id) {
             this.id = id;
             this.belong_center_id = belong_center_id;
             this.subject = subject;
@@ -199,7 +180,7 @@ public class APIClient {
         }
     }
 
-    public class CatInfo{
+    public class CatInfo {
         String id;
         String nickname;
         String belong_center;
@@ -209,34 +190,49 @@ public class APIClient {
         String image_path;
     }
 
-    public class CenterInfo{
+    public class CenterInfo {
         String result;
         int cat_list_cnt;
         List<CatInfo> cat_list;
         FoodSpot center_info;
+        int content_list_cnt;
+        List<BoardContent> content_list;
 
-        CenterInfo(String result, int cat_list_cnt, List<CatInfo> cat_list, FoodSpot center_info){
+        CenterInfo(String result, int cat_list_cnt, List<CatInfo> cat_list, FoodSpot center_info, int content_list_cnt, List<BoardContent> content_list) {
             this.result = result;
             this.cat_list_cnt = cat_list_cnt;
             this.cat_list = cat_list;
             this.center_info = center_info;
+            this.content_list_cnt = content_list_cnt;
+            this.content_list = content_list;
         }
     }
 
-    public class WriteBoardRequest{
+    public class WriteBoardRequest {
         String belong_center_id;
         String subject;
-        boolean is_notice;
+        int is_notice;
         String content;
         String user_id;
 
         WriteBoardRequest(String belong_center_id, String subject,
-                          boolean is_notice, String content, String user_id){
-         this.belong_center_id = belong_center_id;
-         this.subject = subject;
-         this.is_notice = is_notice;
-         this.content = content;
-         this.user_id = user_id;
+                          int is_notice, String content, String user_id) {
+            this.belong_center_id = belong_center_id;
+            this.subject = subject;
+            this.is_notice = is_notice;
+            this.content = content;
+            this.user_id = user_id;
         }
+    }
+
+    public class WriteBoardResult {
+        String result;
+        BoardContent content;
+
+        WriteBoardResult(String result, BoardContent content) {
+            this.result = result;
+            this.content = content;
+        }
+
     }
 }

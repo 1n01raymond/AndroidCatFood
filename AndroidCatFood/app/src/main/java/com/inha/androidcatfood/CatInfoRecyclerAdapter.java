@@ -54,7 +54,7 @@ public class CatInfoRecyclerAdapter extends RecyclerView.Adapter<CatInfoRecycler
             title=(TextView)itemView.findViewById(R.id.title);
             cardview=(CardView)itemView.findViewById(R.id.cardview);
             gender = (TextView)itemView.findViewById(R.id.gender);
-            natrual = (TextView)itemView.findViewById(R.id.netural);
+            natrual = (TextView)itemView.findViewById(R.id.tvBoardCreatInfo);
 
         }
     }
