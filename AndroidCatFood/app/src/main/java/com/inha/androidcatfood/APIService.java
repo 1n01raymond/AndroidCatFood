@@ -18,12 +18,14 @@ public interface APIService{
     @POST("/api/user")
     Call<ResponseBody> login(@Body APIClient.LoginRequest body);
 
+    @POST("api/board")
+    Call<ResponseBody> writeBoard(@Body APIClient.WriteBoardRequest body);
+
     @GET("api/center")
     Call<APIClient.FoodSpotList> getCenter();
 
     @GET("api/board")
     Call<APIClient.Board> getBoard(@Query("id") int centerID);
-
 
     @GET("api/center_info")
     Call<APIClient.CenterInfo> getCenterInfo(@Query("id") int centerID);

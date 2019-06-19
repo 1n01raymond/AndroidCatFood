@@ -123,6 +123,23 @@ public class APIClient {
         });
     }
 
+    public void writeBoard(final String user_id, final String belong_center_id,
+                           final boolean is_notice, final String subject, final String content, final APICallback callback){
+        Call<ResponseBody> res = apiService.writeBoard(new WriteBoardRequest(belong_center_id, subject, is_notice, content, user_id));
+        res.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(callback != null)
+                    callback.run(null);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
     public class LoginRequest {
         String id;
         String name;
@@ -203,6 +220,23 @@ public class APIClient {
             this.cat_list_cnt = cat_list_cnt;
             this.cat_list = cat_list;
             this.center_info = center_info;
+        }
+    }
+
+    public class WriteBoardRequest{
+        String belong_center_id;
+        String subject;
+        boolean is_notice;
+        String content;
+        String user_id;
+
+        WriteBoardRequest(String belong_center_id, String subject,
+                          boolean is_notice, String content, String user_id){
+         this.belong_center_id = belong_center_id;
+         this.subject = subject;
+         this.is_notice = is_notice;
+         this.content = content;
+         this.user_id = user_id;
         }
     }
 }
