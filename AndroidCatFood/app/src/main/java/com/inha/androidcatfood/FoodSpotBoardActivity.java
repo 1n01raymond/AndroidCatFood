@@ -127,8 +127,8 @@ public class FoodSpotBoardActivity extends AppCompatActivity implements View.OnC
             APIClient.WriteBoardResult board = (APIClient.WriteBoardResult) arg;
 
             if (board.result.equals("ok")) {
-                APIClient.BoardContent saveData= board.content;
-                _board.add(0,saveData);
+//                APIClient.BoardContent saveData= board.content;
+//                _board.add(0,saveData);
 
                 Reload();
                 Toast.makeText(getApplicationContext(), "업로드에 성공했습니다.", Toast.LENGTH_LONG).show();
@@ -157,7 +157,14 @@ public class FoodSpotBoardActivity extends AppCompatActivity implements View.OnC
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable edit) {
-                tvContentLength.setText(edit.toString().length()+" / 140");
+                String s = edit.toString();
+                if(s.length()<=140)
+                {
+                    tvContentLength.setText(s.length()+" / 140");
+                }else {
+                    etContent.setText(s.substring(0, s.length()-1));
+                    Toast.makeText(getApplicationContext(), "최대 140자 입력 가능 합니다.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

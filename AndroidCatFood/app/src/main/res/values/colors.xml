@@ -8,4 +8,6 @@
     <color name="colorBoardNoticeContent">#5A3C3C</color>
     <color name="colorBoardSubject">#000000</color>
     <color name="colorBoardContent">#5A5A5A</color>
+    <color name="colorFSInfoTitle">#371A03</color>
+    <color name="colorFSInfoOwner">#5C3610</color>
 </resources>

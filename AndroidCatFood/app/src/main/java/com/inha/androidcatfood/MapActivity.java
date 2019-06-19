@@ -3,8 +3,11 @@ package com.inha.androidcatfood;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -17,7 +20,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 import java.util.List;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
     GoogleMap gMap;
 
     APICallback getCenterCallback = new APICallback() {
@@ -49,6 +52,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Intent intent = new Intent(this.getIntent());
         Profile fbProfile = intent.getParcelableExtra("fbProfile");
 
+        Button btn_facebook_login = (Button) findViewById(R.id.btn_facebook_login);
+        btn_facebook_login.setOnClickListener(this);
+
         APIClient.getInstance().getCenter(getCenterCallback);
     }
 
@@ -62,7 +68,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         LatLng SEOUL = new LatLng(37.56, 126.97);
         map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        map.animateCamera(CameraUpdateFactory.zoomTo(10));
+        map.animateCamera(CameraUpdateFactory.zoomTo(12));
     }
 
     public void addMarker(GoogleMap map, double latitude, double longitude, String title, String snippet, String tag) {
@@ -90,4 +96,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onBackPressed() {}
+
+    @Override
+    public void onClick(View v) {
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

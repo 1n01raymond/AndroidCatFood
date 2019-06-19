@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MapActivity.class);
             intent.putExtra("fbProfile", fbProfile);
             startActivity(intent);
+            finish();
         }
     };
 

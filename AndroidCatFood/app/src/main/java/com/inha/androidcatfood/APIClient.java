@@ -227,12 +227,16 @@ public class APIClient {
 
     public class WriteBoardResult {
         String result;
-        BoardContent content;
+//        BoardContent content;
 
-        WriteBoardResult(String result, BoardContent content) {
+        WriteBoardResult(String result) {
             this.result = result;
-            this.content = content;
         }
+
+//        WriteBoardResult(String result, BoardContent content) {
+//            this.result = result;
+//            this.content = content;
+//        }
 
     }
 }

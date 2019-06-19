@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,24 +28,25 @@ public class FoodSpotInfoActivity extends AppCompatActivity implements View.OnCl
 
             Log.e("Test", "Get centerInfo callback");
 
-            APIClient.CenterInfo centerInfo = (APIClient.CenterInfo)arg;
+            APIClient.CenterInfo centerInfo = (APIClient.CenterInfo) arg;
 
             List<CatInfoRecyclerItem> items = new ArrayList<>();
 
-            for(int i = 0; i < centerInfo.cat_list_cnt; i++){
+            for (int i = 0; i < centerInfo.cat_list_cnt; i++) {
                 APIClient.CatInfo catInfo = centerInfo.cat_list.get(i);
                 items.add(new CatInfoRecyclerItem(catInfo.image_path, catInfo.nickname, catInfo.gender, catInfo.is_natural));
             }
 
-            recyclerView.setAdapter(new CatInfoRecyclerAdapter(getApplicationContext(),items,R.layout.activity_food_spot_info));
+            recyclerView.setAdapter(new CatInfoRecyclerAdapter(getApplicationContext(), items, R.layout.activity_food_spot_info));
 
             title.setText(centerInfo.center_info.name);
             admin.setText("관리자 : " + centerInfo.center_info.owner_name);
 
-            new DownloadImageSetter((ImageView)findViewById(R.id.centerImage)).execute(centerInfo.center_info.image_path);
+            ImageView imgView = (ImageView) findViewById(R.id.centerImage);
+            new DownloadImageSetter(imgView).execute(centerInfo.center_info.image_path);
 
             board = new ArrayList<>();
-            for(APIClient.BoardContent c : centerInfo.content_list){
+            for (APIClient.BoardContent c : centerInfo.content_list) {
                 board.add(c);
             }
         }
@@ -55,18 +57,17 @@ public class FoodSpotInfoActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_spot_info);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        title = (TextView)findViewById(R.id.center_title);
-        admin = (TextView)findViewById(R.id.center_admin);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        title = (TextView) findViewById(R.id.center_title);
+        admin = (TextView) findViewById(R.id.center_admin);
 
-        Button btnBoard = (Button)findViewById(R.id.btnBoard);
+        ImageButton btnBoard = (ImageButton) findViewById(R.id.btnBoard);
         btnBoard.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-
-         String _id = foodSpotID =getIntent().getStringExtra("_id");
+        String _id = foodSpotID = getIntent().getStringExtra("_id");
 
         APIClient.getInstance().getCenterInfo(Integer.parseInt(_id), getCenterInfoCallback);
     }

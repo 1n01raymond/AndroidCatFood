@@ -17,7 +17,7 @@ public class DownloadImageSetter extends AsyncTask<String, Void, Bitmap> {
 
     protected Bitmap doInBackground(String... urls) {
         String imageURL = urls[0];
-        Bitmap bimage = null;
+        Bitmap bimage =  null;
         try {
             InputStream in = new java.net.URL(imageURL).openStream();
             bimage = BitmapFactory.decodeStream(in);
