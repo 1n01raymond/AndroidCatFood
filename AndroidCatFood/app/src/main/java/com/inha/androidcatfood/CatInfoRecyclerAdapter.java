@@ -32,7 +32,7 @@ public class CatInfoRecyclerAdapter extends RecyclerView.Adapter<CatInfoRecycler
         final CatInfoRecyclerItem item = items.get(position);
         new DownloadImageSetter(holder.image).execute(item.getImage());
         holder.title.setText(item.getTitle());
-        holder.gender.setText(item.gender > 0 ? "♂" : "♀");
+        holder.gender.setText(item.gender > 0 ? "남아" : "여아");
         holder.natrual.setText(item.natural ? "중성화 O" : "중성화 X");
     }
 
