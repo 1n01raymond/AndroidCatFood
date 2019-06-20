@@ -127,8 +127,8 @@ public class FoodSpotBoardActivity extends AppCompatActivity implements View.OnC
             APIClient.WriteBoardResult board = (APIClient.WriteBoardResult) arg;
 
             if (board.result.equals("ok")) {
-//                APIClient.BoardContent saveData= board.content;
-//                _board.add(0,saveData);
+                APIClient.BoardContent saveData= board.content;
+                _board.add(0,saveData);
 
                 Reload();
                 Toast.makeText(getApplicationContext(), "업로드에 성공했습니다.", Toast.LENGTH_LONG).show();
@@ -211,9 +211,7 @@ public class FoodSpotBoardActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         boolean isNotice = cbxNotice.isChecked();
 
-//        APIClient.getInstance().writeBoard(_id, (isNotice ? 0 : 1), etSubject.getText().toString(), etContent.getText().toString(), writeBoardCallback);
-
-        APIClient.getInstance().writeBoard(_id, (isNotice ? 0 : 1), "tetst", "cdcdcdcdc", writeBoardCallback);
+        APIClient.getInstance().writeBoard(_id, (isNotice ? 1 : 0), etSubject.getText().toString(), etContent.getText().toString(), writeBoardCallback);
 
         setProgressBarIndeterminateVisibility(true);
     }

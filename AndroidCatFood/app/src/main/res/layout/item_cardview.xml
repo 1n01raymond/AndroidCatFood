@@ -7,29 +7,31 @@
     android:gravity="center_horizontal">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardview"
-        card_view:cardCornerRadius="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_horizontal">
+            android:id="@+id/cardview"
+            card_view:cardCornerRadius="3dp"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
             <ImageView
                     android:id="@+id/image"
-                    android:layout_width="275dp"
-                    android:layout_height="210dp"
+                    android:layout_width="250dp"
+                    android:layout_height="150dp"
                     card_view:srcCompat="@drawable/cat_profil3"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 <TextView
                         android:id="@+id/title"
@@ -39,7 +41,8 @@
                         android:text="ddd"
                         android:textAlignment="center"
                         android:textSize="30sp"
-                        android:fontFamily="@font/bmjua"/>
+                        android:fontFamily="@font/bmjua"
+                        android:textColor="@color/colorFSInfoTitle"/>
 
                 <TextView
                         android:id="@+id/gender"
@@ -47,12 +50,13 @@
                         android:layout_height="wrap_content"
                         android:text="ddd"
                         android:textAlignment="center"
-                        android:textSize="30sp"
-                        android:fontFamily="@font/bmjua"/>
+                        android:textSize="24sp"
+                        android:fontFamily="@font/bmjua"
+                        android:textColor="@color/colorFSInfoOwner"/>
 
                 <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
 
                 <TextView
                         android:id="@+id/netural"
@@ -60,8 +64,9 @@
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/bmjua"/>
+                        android:textSize="24sp"
+                        android:fontFamily="@font/bmjua"
+                        android:textColor="@color/colorFSInfoOwner"/>
             </LinearLayout>
 
         </LinearLayout>

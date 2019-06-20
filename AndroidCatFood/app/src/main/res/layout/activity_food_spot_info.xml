@@ -39,7 +39,9 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="@color/colorFSInfoOwner"
-            android:fontFamily="@font/bmjua"/>
+            android:fontFamily="@font/bmjua"
+            android:layout_marginBottom="20dp"
+            android:layout_margin="5dp"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
